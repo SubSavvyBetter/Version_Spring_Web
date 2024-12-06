@@ -1,10 +1,19 @@
 package com.example.subsavvy.Data;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class CancellationSub {
 
     @Id
@@ -25,7 +34,7 @@ public class CancellationSub {
     private Status.StatusType status;
 
     private LocalDateTime processed_at;
-    private LocalDateTime created_at;
+    @CreationTimestamp
+    private Timestamp created_at;
 
-    // Getters et setters
 }

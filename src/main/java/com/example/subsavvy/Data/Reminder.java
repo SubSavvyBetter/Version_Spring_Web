@@ -1,11 +1,20 @@
 package com.example.subsavvy.Data;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class Reminder {
 
     @Id
@@ -26,8 +35,8 @@ public class Reminder {
     @Enumerated(EnumType.STRING)
     private Status.StatusType status;
 
-    private LocalDateTime created_at;
+    @CreationTimestamp
+    private Timestamp created_at;
     private LocalDateTime end_at;
 
-    // Getters et setters
 }
