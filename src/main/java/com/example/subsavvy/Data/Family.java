@@ -22,8 +22,11 @@ public class Family {
     @GeneratedValue
     private UUID id;
     private String name;
-    @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<User> users;
+
+    @ManyToOne
+    @JoinColumn(name = "family_id")
+    private Family family;
+
     @CreationTimestamp
     private Timestamp created_at;
     @UpdateTimestamp
@@ -31,6 +34,5 @@ public class Family {
 
     public Family(String name, List<User> users) {
         this.name = name;
-        this.users = users;
     }
 }
