@@ -21,11 +21,28 @@ public class Subscription {
     @Id
     @GeneratedValue
     private UUID id;
+    private int user_id ;
     private String name;
+    private int price;
+    private Timestamp start_date;
+    private Timestamp end_date;
+    private boolean trial;
+    private Status.StatusType status;
+    @CreationTimestamp
+    private Timestamp created_at;
+    @UpdateTimestamp
+    private Timestamp update_at;
 
 
 
-    public Subscription(String name, String password_hash, String profile_picture){
+
+    public Subscription(int user_id, String name, int price, Timestamp start_date, Timestamp end_date, boolean trial, Status.StatusType status){
+        this.user_id=user_id;
         this.name=name;
+        this.price=price;
+        this.start_date=start_date;
+        this.end_date=end_date;
+        this.trial=trial;
+        this.status=status;
     }
 }
