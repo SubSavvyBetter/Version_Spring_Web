@@ -31,8 +31,10 @@ public class User {
     private String profile_picture;
 
 
-    public User(String name, String password_hash, String profile_picture){
+    public User(String name, String mail,  String password_hash, String profile_picture){
         this.name=name;
         this.mail = mail;
+        this.password_hash=password_hash;
+        this.profile_picture=profile_picture;
     }
 }
