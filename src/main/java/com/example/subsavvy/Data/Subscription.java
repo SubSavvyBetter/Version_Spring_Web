@@ -20,7 +20,7 @@ public class Subscription {
     @GeneratedValue
     private UUID id;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // forgein key name user_id
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String name;

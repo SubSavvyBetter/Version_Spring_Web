@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class FamilyService {
@@ -23,11 +24,11 @@ public class FamilyService {
         return familyRepository.findAll();
     }
 
-    public Optional<Family> getFamilyById(Long id) {
+    public Optional<Family> getFamilyById(UUID id) {
         return familyRepository.findById(id);
     }
 
-    public void deleteFamily(Long id) {
+    public void deleteFamily(UUID id) {
         familyRepository.deleteById(id);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/family")
@@ -27,12 +28,12 @@ public class FamilyController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Family> getFamilyById(@PathVariable Long id) {
+    public Optional<Family> getFamilyById(@PathVariable UUID id) {
         return familyService.getFamilyById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteFamily(@PathVariable Long id) {
+    public void deleteFamily(@PathVariable UUID id) {
         familyService.deleteFamily(id);
     }
 }
