@@ -9,9 +9,8 @@ import java.util.UUID;
 
 @Repository
 public interface ReminderRepository extends JpaRepository<Reminder, UUID> {
-    // Méthode pour récupérer les rappels par userId
+
     List<Reminder> findAllByUserId(UUID userId);
 
-    // Méthode pour récupérer les rappels par subscriptionId
     List<Reminder> findAllBySubscriptionId(UUID subscriptionId);
 }

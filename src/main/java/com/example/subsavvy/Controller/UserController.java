@@ -27,19 +27,16 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    // Récupérer un utilisateur par ID
     @GetMapping("/{id}")
     public User getUserById(@PathVariable UUID id) {
         return userService.getUserById(id);
     }
 
-    // Mettre à jour un utilisateur
     @PutMapping("/{id}")
     public User updateUser(@PathVariable UUID id, @RequestBody User updatedUser) {
         return userService.updateUser(id, updatedUser.getName(), updatedUser.getMail(), updatedUser.getPassword_hash());
     }
 
-    // Supprimer un utilisateur par ID
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable User user) {
         userService.deleteUser(user);
