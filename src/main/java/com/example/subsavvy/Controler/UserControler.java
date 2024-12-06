@@ -5,9 +5,11 @@ import com.example.subsavvy.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/user")
+public class UserControler {
 
     @Autowired
     private UserService userService;
@@ -16,5 +18,11 @@ public class UserController {
     @PostMapping
     public User addUser(@RequestBody User user) {
         return userService.addUser(user.getName(), user.getMail(), user.getPassword_hash(), user.getPassword_hash());
+    }
+
+    // Endpoint to retreive all users
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }
