@@ -31,7 +31,7 @@ public class SubscriptionService {
     }
 
     public Subscription updateSubscription(UUID id, Subscription subscription) {
-        // Vérifie si l'abonnement existe
+
         if (subscriptionRepository.existsById(id)) {
             subscription.setId(id);
             return subscriptionRepository.save(subscription);
