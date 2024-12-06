@@ -38,6 +38,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CancellationSub> cancellationSubs;
 
+    @ManyToOne
+    @JoinColumn(name = "family_id")
+    private Family family;
+
     public User(String name, String mail,  String password_hash, String profile_picture){
         this.name=name;
         this.mail = mail;
