@@ -1,4 +1,4 @@
-package com.example.subsavvy.Controler;
+package com.example.subsavvy.Controller;
 
 import com.example.subsavvy.Data.User;
 import com.example.subsavvy.Service.UserService;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-public class UserControler {
+public class UserController {
 
     @Autowired
     private UserService userService;
