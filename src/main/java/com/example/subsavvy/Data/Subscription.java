@@ -1,8 +1,6 @@
 package com.example.subsavvy.Data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,23 +19,25 @@ public class Subscription {
     @Id
     @GeneratedValue
     private UUID id;
-    private int user_id ;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false) // forgein key name user_id
+    private User user;
+
     private String name;
     private int price;
     private Timestamp start_date;
     private Timestamp end_date;
     private boolean trial;
     private Status.StatusType status;
+
     @CreationTimestamp
     private Timestamp created_at;
     @UpdateTimestamp
     private Timestamp update_at;
 
 
-
-
-    public Subscription(int user_id, String name, int price, Timestamp start_date, Timestamp end_date, boolean trial, Status.StatusType status){
-        this.user_id=user_id;
+    public Subscription(User user, String name, int price, Timestamp start_date, Timestamp end_date, boolean trial, Status.StatusType status){
+        this.user=user;
         this.name=name;
         this.price=price;
         this.start_date=start_date;
