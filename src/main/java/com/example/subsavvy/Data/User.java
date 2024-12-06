@@ -1,8 +1,6 @@
 package com.example.subsavvy.Data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +29,14 @@ public class User {
     private Timestamp update_at;
     private String profile_picture;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Subscription> subscriptions;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reminder> reminders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CancellationSub> cancellationSubs;
 
     public User(String name, String mail,  String password_hash, String profile_picture){
         this.name=name;
