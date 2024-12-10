@@ -1,4 +1,4 @@
-FROM openjdk:23-jdk-bullseye
+FROM openjdk:21-jdk-bullseye
 RUN addgroup --system spring && \
     adduser --system spring && \ 
     adduser spring spring 
