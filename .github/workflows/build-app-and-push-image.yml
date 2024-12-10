@@ -26,7 +26,7 @@ jobs:
 
     # Step 3: Build Spring Boot application using Gradle
     - name: Build with Gradle
-      run: ./gradlew clean build -x test
+      run: ./gradlew clean build
 
     # Step 4: Log in to GitHub Container Registry (GHCR)
     - name: Log in to GitHub Container Registry
@@ -35,10 +35,14 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-
+    
+    - id: lower-repo
+      name: Lowercase repo name
+      run: |
+          echo "repository=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
     # Step 5: Build the Docker Image
     - name: Build the Docker Image
-      run: docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest .
+      run: docker build -t ghcr.io/${{ github.repository_owner }}/${{ steps.lower-repo.outputs.repository }}:latest .
 
     # Step 6: Push the Docker Image to GHCR
     - name: Push the Docker Image to GitHub Container Registry
