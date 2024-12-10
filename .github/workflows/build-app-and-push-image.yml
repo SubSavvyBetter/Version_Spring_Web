@@ -1,0 +1,46 @@
+name: Build & Deploy Spring Boot Docker Image (Gradle)
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow on push to the 'main' branch
+  pull_request:
+    branches:
+      - main  # Optional: Run on pull requests to 'main'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up JDK 21
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin' # Use Adoptium Temurin
+        java-version: '21'
+
+    # Step 3: Build Spring Boot application using Gradle
+    - name: Build with Gradle
+      run: ./gradlew clean build -x test
+
+    # Step 4: Log in to GitHub Container Registry (GHCR)
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    # Step 5: Build the Docker Image
+    - name: Build the Docker Image
+      run: docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest .
+
+    # Step 6: Push the Docker Image to GHCR
+    - name: Push the Docker Image to GitHub Container Registry
+      run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
+
