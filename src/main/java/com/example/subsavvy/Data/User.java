@@ -1,70 +1,51 @@
 package com.example.subsavvy.Data;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class User {
-    private String id;
+
+    @Id
+    @GeneratedValue
+    private UUID id;
     private String name;
     private String mail;
     private String password_hash;
+    @CreationTimestamp
     private Timestamp created_at;
+    @UpdateTimestamp
     private Timestamp update_at;
     private String profile_picture;
 
-    public User(String name, String password_hash, String profile_picture){
-        this.id = UUID.randomUUID().toString();
-        this.created_at = new Timestamp(System.currentTimeMillis());
-        this.update_at = null;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Subscription> subscriptions;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reminder> reminders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CancellationSub> cancellationSubs;
+
+    @ManyToOne
+    @JoinColumn(name = "family_id")
+    private Family family;
+
+    public User(String name, String mail,  String password_hash, String profile_picture){
         this.name=name;
         this.mail = mail;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setProfile_picture(String profile_picture) {
-        this.profile_picture = profile_picture;
-    }
-
-    public void setUpdate_at(Timestamp update_at) {
-        this.update_at = update_at;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword_hash() {
-        return password_hash;
-    }
-
-    public String getProfile_picture() {
-        return profile_picture;
-    }
-
-    public Timestamp getCreated_at() {
-        return created_at;
-    }
-
-    public Timestamp getUpdate_at() {
-        return update_at;
+        this.password_hash=password_hash;
+        this.profile_picture=profile_picture;
     }
 }
