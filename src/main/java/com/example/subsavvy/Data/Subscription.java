@@ -45,4 +45,6 @@ public class Subscription {
         this.trial=trial;
         this.status=status;
     }
+
+
 }

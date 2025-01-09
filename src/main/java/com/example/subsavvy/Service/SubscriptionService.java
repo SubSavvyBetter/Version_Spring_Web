@@ -18,7 +18,9 @@ public class SubscriptionService {
     @Autowired
     private SubscriptionRepository subscriptionRepository;
 
-     public List<Subscription> getAllSubscriptions() {
+    private UserService userService;
+
+    public List<Subscription> getAllSubscriptions() {
         return subscriptionRepository.findAll();
     }
 
@@ -42,5 +44,9 @@ public class SubscriptionService {
 
     public void deleteSubscription(UUID id) {
         subscriptionRepository.deleteById(id);
+    }
+
+    public List<Subscription> getSubscriptionsByUserId(UUID userId) {
+        return subscriptionRepository.findByUser(userService.getUserById(userId));
     }
 }
