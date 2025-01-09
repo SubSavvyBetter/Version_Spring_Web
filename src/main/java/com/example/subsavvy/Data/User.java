@@ -22,7 +22,8 @@ public class User {
     private UUID id;
     private String name;
     private String mail;
-    private String password_hash;
+    private boolean admin;
+    private String password;
     @CreationTimestamp
     private Timestamp created_at;
     @UpdateTimestamp
@@ -42,10 +43,11 @@ public class User {
     @JoinColumn(name = "family_id")
     private Family family;
 
-    public User(String name, String mail,  String password_hash, String profile_picture){
-        this.name=name;
+    public User(String name, String mail,  String password_hash, String profile_picture, boolean admin){
+        this.name =name;
         this.mail = mail;
-        this.password_hash=password_hash;
+        this.password =password_hash;
         this.profile_picture=profile_picture;
+        this.admin=admin;
     }
 }

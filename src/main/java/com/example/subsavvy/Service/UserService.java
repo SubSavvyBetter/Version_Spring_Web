@@ -29,8 +29,8 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public User addUser(String name, String mail,  String password_hash, String profile_picture) {
-        User user = new User(name, mail, password_hash, profile_picture);
+    public User addUser(String name, String mail,  String password_hash, String profile_picture, boolean admin) {
+        User user = new User(name, mail, password_hash, profile_picture, admin);
         return userRepository.save(user); // Sauvegarde dans la base de données
     }
 
@@ -40,13 +40,17 @@ public class UserService {
 
         existingUser.setName(name);
         existingUser.setMail(mail);
-        existingUser.setPassword_hash(passwordHash);
+        existingUser.setPassword(passwordHash);
 
         return userRepository.save(existingUser);
     }
 
     public User getUserById(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByName(username);
     }
 
 }
