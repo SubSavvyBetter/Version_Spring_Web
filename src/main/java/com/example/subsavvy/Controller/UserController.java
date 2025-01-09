@@ -1,13 +1,14 @@
 package com.example.subsavvy.Controller;
 
+import ch.qos.logback.classic.encoder.JsonEncoder;
 import com.example.subsavvy.Data.User;
 import com.example.subsavvy.Security.JwtTokenProvider;
 import com.example.subsavvy.Service.UserService;
 import com.example.subsavvy.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -20,15 +21,19 @@ public class UserController {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private PasswordEncoder passwordEncoder;
+
     // Injection via le constructeur
-    public UserController(JwtTokenProvider jwtTokenProvider) {
+    public UserController(JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Endpoint to add user
     @PostMapping
     public User addUser(@RequestBody UserDto user) {
-        return userService.addUser(user.getName(), user.getMail(), user.getPassword(), user.getPassword() , user.isAdmin());
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        return userService.addUser(user.getName(), user.getMail(), hashedPassword, user.getProfil_picture() , user.isAdmin());
     }
 
     // Endpoint to retreive all users
@@ -54,7 +59,7 @@ public class UserController {
 
     @GetMapping("/api/user/uid")
     public ResponseEntity<String> getUid(@RequestHeader("Authorization") String authorization) {
-        // Extraire le token Bearer
+
         String token = authorization.substring(7);
 
         String uid = jwtTokenProvider.getUserIdFromToken(token);

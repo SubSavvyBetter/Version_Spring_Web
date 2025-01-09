@@ -5,6 +5,8 @@ import com.example.subsavvy.Security.JwtTokenProvider;
 import com.example.subsavvy.Service.UserService;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +25,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
         User user = userService.findByUsername(authRequest.getUsername());
         if (user != null && passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
-            return jwtTokenProvider.generateToken(String.valueOf(user.getId()));
+            String token = jwtTokenProvider.generateToken(String.valueOf(user.getId()));
+            return ResponseEntity.ok(token);
         }
-        throw new RuntimeException("Invalid username or password");
+        throw new BadCredentialsException("Invalid username or password");
     }
+
 }
 
 @Setter
@@ -38,5 +42,4 @@ class AuthRequest {
     private String username;
     private String password;
 
-    // Getters and setters
 }
