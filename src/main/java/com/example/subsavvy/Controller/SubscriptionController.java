@@ -4,6 +4,7 @@ import com.example.subsavvy.Data.Subscription;
 import com.example.subsavvy.Service.SubscriptionService;
 import com.example.subsavvy.Security.JwtTokenProvider;
 import com.example.subsavvy.Service.UserService;
+import com.example.subsavvy.dto.SubscriptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,14 +50,13 @@ public class SubscriptionController {
 
     @PostMapping
     public ResponseEntity<Subscription> addSubscription(
-            @RequestBody Subscription subscription,
+            @RequestBody SubscriptionDto subscription,
             @RequestHeader("Authorization") String authorization
     ) {
         String token = authorization.substring(7);
         String uid = jwtTokenProvider.getUserIdFromToken(token);
         UUID userId = UUID.fromString(uid);
-        subscription.setUser(userService.getUserById(userId));
-        Subscription addedSubscription = subscriptionService.addSubscription(subscription);
+        Subscription addedSubscription = subscriptionService.addSubscription(userService.getUserById(userId),subscription.getName(),subscription.getPrice(),subscription.getStart_date(),subscription.getEnd_date(),subscription.isTrial(),subscription.getStatus());
         return ResponseEntity.ok(addedSubscription);
     }
 
