@@ -29,7 +29,7 @@ public class AuthController {
         User user = userService.findByUsername(authRequest.getUsername());
         if (user != null && passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
             String token = jwtTokenProvider.generateToken(String.valueOf(user.getId()));
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok("Bearer " + token);
         }
         throw new BadCredentialsException("Invalid username or password");
     }

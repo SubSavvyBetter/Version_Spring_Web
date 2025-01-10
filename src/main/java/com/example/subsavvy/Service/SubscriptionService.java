@@ -23,6 +23,10 @@ public class SubscriptionService {
 
     private UserService userService;
 
+    public SubscriptionService(UserService userService) {
+        this.userService = userService;
+    }
+
     public List<Subscription> getAllSubscriptions() {
         return subscriptionRepository.findAll();
     }
