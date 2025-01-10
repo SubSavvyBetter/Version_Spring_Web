@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SubSavvy" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="SubSavvy.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.subsavvy.SubSavvyApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
