@@ -30,13 +30,13 @@ public class User {
     private Timestamp update_at;
     private String profile_picture;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
     private List<Subscription> subscriptions;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
     private List<Reminder> reminders;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
     private List<CancellationSub> cancellationSubs;
 
     @ManyToOne

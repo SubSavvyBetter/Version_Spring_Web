@@ -54,7 +54,7 @@ public class SubscriptionController {
         String uid = jwtTokenProvider.getUserIdFromToken(token);
         UUID userId = UUID.fromString(uid);
         Optional<Subscription> subscription = subscriptionService.getSubscriptionById(id);
-        if (subscription.isPresent() && subscription.get().getUser().getId().equals(userId)) {
+        if (subscription.isPresent() && subscription.get().getUserid().equals(userId)) {
             return ResponseEntity.ok(subscription.get());
         }
         return ResponseEntity.status(403).body(null);
@@ -88,7 +88,7 @@ public class SubscriptionController {
         logger.info("User with ID {} found. Adding subscription", userId);
 
         Subscription addedSubscription = subscriptionService.addSubscription(
-                user, subscription.getName(), subscription.getPrice(),
+                userId, subscription.getName(), subscription.getPrice(),
                 subscription.getStart_date(), subscription.getEnd_date(),
                 subscription.isTrial(), subscription.getStatus()
         );
@@ -111,8 +111,8 @@ public class SubscriptionController {
         String uid = jwtTokenProvider.getUserIdFromToken(token);
         UUID userId = UUID.fromString(uid);
         Optional<Subscription> existingSubscription = subscriptionService.getSubscriptionById(id);
-        if (existingSubscription.isPresent() && existingSubscription.get().getUser().getId().equals(userId)) {
-            subscription.setUser(userService.getUserById(userId));
+        if (existingSubscription.isPresent() && existingSubscription.get().getUserid().equals(userId)) {
+            subscription.setUserid(userId);
             Subscription updatedSubscription = subscriptionService.updateSubscription(id, subscription);
             return ResponseEntity.ok(updatedSubscription);
         }
@@ -131,7 +131,7 @@ public class SubscriptionController {
         String uid = jwtTokenProvider.getUserIdFromToken(token);
         UUID userId = UUID.fromString(uid);
         Optional<Subscription> existingSubscription = subscriptionService.getSubscriptionById(id);
-        if (existingSubscription.isPresent() && existingSubscription.get().getUser().getId().equals(userId)) {
+        if (existingSubscription.isPresent() && existingSubscription.get().getUserid().equals(userId)) {
             subscriptionService.deleteSubscription(id);
             return ResponseEntity.noContent().build();
         }

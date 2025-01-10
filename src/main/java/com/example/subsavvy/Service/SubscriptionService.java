@@ -35,7 +35,7 @@ public class SubscriptionService {
         return subscriptionRepository.findById(id);
     }
 
-     public Subscription addSubscription(User user, String name, int price, Timestamp start_date, Timestamp end_date, boolean trial, Status.StatusType status) {
+     public Subscription addSubscription(UUID user, String name, int price, Timestamp start_date, Timestamp end_date, boolean trial, Status.StatusType status) {
         Subscription subscription = new Subscription(user,name,price,start_date,end_date,trial,status);
         return subscriptionRepository.save(subscription);
     }
@@ -55,6 +55,6 @@ public class SubscriptionService {
     }
 
     public List<Subscription> getSubscriptionsByUserId(UUID userId) {
-        return subscriptionRepository.findByUser(userService.getUserById(userId));
+        return subscriptionRepository.findByUserid(userId);
     }
 }

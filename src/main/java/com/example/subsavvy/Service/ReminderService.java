@@ -22,8 +22,8 @@ public class ReminderService {
         return reminderRepository.findAll();
     }
 
-    public List<Reminder> getRemindersByUserId(UUID userId) {
-        return reminderRepository.findAllByUserId(userId);
+    public List<Reminder> getRemindersByUserId(UUID userid) {
+        return reminderRepository.findAllByUserid(userid);
     }
 
     public List<Reminder> getRemindersBySubscriptionId(UUID subscriptionId) {

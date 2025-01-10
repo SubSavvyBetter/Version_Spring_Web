@@ -11,9 +11,7 @@ import java.util.List;
 public interface SubscriptionRepository extends JpaRepository<Subscription, UUID> {
 
     // Méthode pour récupérer toutes les souscriptions par utilisateur
-    List<Subscription> findByUser(User user);
+    List<Subscription> findByUserid(UUID userid);
 
-    // Méthode pour récupérer toutes les souscriptions par userId
-    List<Subscription> findByUserId(UUID userId);
 
 }
