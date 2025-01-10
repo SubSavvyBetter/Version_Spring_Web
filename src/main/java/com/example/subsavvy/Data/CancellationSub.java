@@ -24,9 +24,7 @@ public class CancellationSub {
     @JoinColumn(name = "sub_id", nullable = false)
     private Subscription subscription;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private UUID userid;
 
     private LocalDateTime request_date;
 

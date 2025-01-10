@@ -19,9 +19,8 @@ public class Subscription {
     @Id
     @GeneratedValue
     private UUID id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
+    private UUID userid;
 
     private String name;
     private int price;
@@ -36,8 +35,8 @@ public class Subscription {
     private Timestamp update_at;
 
 
-    public Subscription(User user, String name, int price, Timestamp start_date, Timestamp end_date, boolean trial, Status.StatusType status){
-        this.user=user;
+    public Subscription(UUID user, String name, int price, Timestamp start_date, Timestamp end_date, boolean trial, Status.StatusType status){
+        this.userid=user;
         this.name=name;
         this.price=price;
         this.start_date=start_date;
@@ -45,4 +44,6 @@ public class Subscription {
         this.trial=trial;
         this.status=status;
     }
+
+
 }

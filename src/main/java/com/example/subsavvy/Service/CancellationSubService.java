@@ -22,8 +22,8 @@ public class CancellationSubService {
         return cancellationSubRepository.findAll();
     }
 
-    public List<CancellationSub> getCancellationsByUserId(UUID userId) {
-        return cancellationSubRepository.findAllByUserId(userId);
+    public List<CancellationSub> getCancellationsByUserId(UUID userid) {
+        return cancellationSubRepository.findAllByUserid(userid);
     }
 
     public void deleteCancellation(UUID id) {

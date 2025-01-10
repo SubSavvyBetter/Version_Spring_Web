@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface CancellationSubRepository extends JpaRepository<CancellationSub, UUID> {
-    List<CancellationSub> findAllByUserId(UUID userId);
+    List<CancellationSub> findAllByUserid(UUID userid);
 }
