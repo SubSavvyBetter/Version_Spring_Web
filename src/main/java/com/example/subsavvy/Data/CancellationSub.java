@@ -35,4 +35,9 @@ public class CancellationSub {
     @CreationTimestamp
     private Timestamp created_at;
 
+    public CancellationSub(Subscription subscription, UUID userid){
+        this.subscription=subscription;
+        this.userid=userid;
+    }
+
 }
