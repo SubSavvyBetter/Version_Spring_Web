@@ -39,9 +39,7 @@ public class User {
     @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
     private List<CancellationSub> cancellationSubs;
 
-    @ManyToOne
-    @JoinColumn(name = "family_id")
-    private Family family;
+    private UUID family_id;
 
     public User(String name, String mail,  String password_hash, String profile_picture, boolean admin){
         this.name =name;

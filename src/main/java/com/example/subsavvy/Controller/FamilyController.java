@@ -1,8 +1,12 @@
 package com.example.subsavvy.Controller;
 
 import com.example.subsavvy.Data.Family;
+import com.example.subsavvy.Data.User;
+import com.example.subsavvy.Security.JwtTokenProvider;
 import com.example.subsavvy.Service.FamilyService;
+import com.example.subsavvy.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,10 +20,50 @@ public class FamilyController {
     @Autowired
     private FamilyService familyService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @PostMapping
-    public Family addFamily(@RequestBody Family family) {
-        return familyService.addFamily(family);
+    public ResponseEntity<Object> addFamily(
+            @RequestParam String name,
+            @RequestHeader("Authorization") String authorization
+    ) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(400).body(null);
+        }
+
+        String token = authorization.substring(7);
+
+        String userId = jwtTokenProvider.getUserIdFromToken(token);
+
+        return ResponseEntity.ok(familyService.addFamily(new Family(name, UUID.fromString(userId))));
+    }
+
+    @PostMapping
+    public ResponseEntity addMember(
+            @RequestParam String mail,
+            @RequestHeader("Authorization") String authorization
+    ) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(400).body(null);
+        }
+
+        String token = authorization.substring(7);
+
+        String userId = jwtTokenProvider.getUserIdFromToken(token);
+
+        Optional<Family> family = familyService.getFamilyById(UUID.fromString(userId));
+        User user = userService.getUserByMail(mail);
+
+        if(user == null){
+            // inscription à faire
+            return (ResponseEntity) ResponseEntity.internalServerError();
+        }
+
+        return (ResponseEntity) ResponseEntity.ok();
     }
 
     @GetMapping
@@ -28,8 +72,17 @@ public class FamilyController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Family> getFamilyById(@PathVariable UUID id) {
-        return familyService.getFamilyById(id);
+    public ResponseEntity<Object> getFamilyById(
+            @RequestHeader("Authorization") String authorization
+    ) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(400).body(null);
+        }
+
+        String token = authorization.substring(7);
+        String userId = jwtTokenProvider.getUserIdFromToken(token);
+
+        return ResponseEntity.ok(familyService.getFamilyById(UUID.fromString(userId)));
     }
 
     @DeleteMapping("/{id}")
