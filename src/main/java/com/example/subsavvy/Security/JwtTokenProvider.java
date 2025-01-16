@@ -12,7 +12,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long validityInMillis = 3600000; // 1 heure
+    private final long validityInMillis = 360000000;
 
     public String generateToken(String username) {
         return Jwts.builder()
