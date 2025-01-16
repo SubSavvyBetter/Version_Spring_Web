@@ -3,6 +3,7 @@ package com.example.subsavvy.Controller;
 import com.example.subsavvy.Data.User;
 import com.example.subsavvy.Security.JwtTokenProvider;
 import com.example.subsavvy.Service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
         User user = userService.findByUsername(authRequest.getUsername());
         if (user != null && passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
             String token = jwtTokenProvider.generateToken(String.valueOf(user.getId()));
-            return ResponseEntity.ok("Bearer " + token);
+            return ResponseEntity.ok(new AuthResponse("Bearer " + token));
         }
         throw new BadCredentialsException("Invalid username or password");
     }
@@ -43,3 +44,11 @@ class AuthRequest {
     private String password;
 
 }
+
+@Getter
+@Setter
+@AllArgsConstructor
+class AuthResponse {
+    private String token;
+}
+

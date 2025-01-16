@@ -37,4 +37,12 @@ public class Reminder {
     private Timestamp created_at;
     private LocalDateTime end_at;
 
+    public Reminder(Subscription subscription, UUID userid, LocalDate reminder_date, String message){
+        this.subscription=subscription;
+        this.userid=userid;
+        this.reminder_date=reminder_date;
+        this.message=message;
+    }
+
+
 }
