@@ -64,6 +64,6 @@ public class UserController {
 
         String uid = jwtTokenProvider.getUserIdFromToken(token);
 
-        return ResponseEntity.ok(uid);  // Retourner l'UID dans la réponse
+        return ResponseEntity.ok(uid);
     }
 }

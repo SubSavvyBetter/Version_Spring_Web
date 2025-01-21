@@ -1,5 +1,6 @@
 package com.example.subsavvy.Data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,10 @@ public class User {
     @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
     private List<CancellationSub> cancellationSubs;
 
-    private UUID family_id;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "family_id")
+    private Family family;
 
     public User(String name, String mail,  String password_hash, String profile_picture, boolean admin){
         this.name =name;
