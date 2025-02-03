@@ -27,8 +27,8 @@ public class OpenApiConfig {
             return new OpenAPI().addSecurityItem(new SecurityRequirement().
                             addList("Bearer Authentication"))
                     .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
-                    .info(new Info().title("Fleetwatch API")
-                            .description("Documentation for the Fleetwatch API.")
+                    .info(new Info().title("SubSavvy API")
+                            .description("Documentation for the SubSavvy API.")
                             .version("0.1"));
         }
 
